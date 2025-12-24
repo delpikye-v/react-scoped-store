@@ -1,0 +1,72 @@
+{
+  "name": "react-scoped-store-z",
+  "version": "1.0.0",
+  "description": "Lightweight scoped state store for React using useSyncExternalStore",
+  "license": "MIT",
+  "author": "Delpi.Kye",
+  "sideEffects": false,
+
+  "main": "build/index.cjs",
+  "module": "build/index.esm.js",
+  "types": "build/index.d.ts",
+
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.esm.js",
+      "require": "./build/index.cjs"
+    }
+  },
+
+  "files": ["build"],
+
+  "scripts": {
+    "clean": "rimraf build",
+    "build": "rollup -c",
+    "cb": "npm run clean && npm run build",
+    "prepublishOnly": "npm run build"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/delpikye-v/react-scoped-store.git"
+  },
+  "homepage": "https://github.com/delpikye-v/react-scoped-store#readme",
+  "bugs": {
+    "url": "https://github.com/delpikye-v/react-scoped-store/issues"
+  },
+
+  "keywords": [
+    "react",
+    "state-management",
+    "scoped-store",
+    "external-store",
+    "use-sync-external-store",
+    "react-hooks",
+    "react-state",
+    "context-alternative",
+    "performance",
+    "react-17"
+  ],
+
+  "peerDependencies": {
+    "react": ">=17"
+  },
+
+  "dependencies": {
+    "use-sync-external-store": "^1.6.0"
+  },
+
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@types/react": "^17.0.90",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.56.3",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.2"
+  }
+}
