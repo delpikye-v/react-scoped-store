@@ -1,25 +1,27 @@
-### react-scoped-store-z
+## ⭐ react-scoped-store-z
 
-- Lightweight scoped state store for React using useSyncExternalStore.
-- Scoped per component, optimized rendering with selectors.
+[![NPM](https://img.shields.io/npm/v/react-scoped-store-z.svg)](https://www.npmjs.com/package/react-scoped-store-z)
+![Downloads](https://img.shields.io/npm/dt/react-scoped-store-z.svg)
+
+---
+
+A lightweight scoped state store for React.
+State lives with the component, not globally. Optimized with selectors using useSyncExternalStore.
+
+<a href="https://codesandbox.io/p/sandbox/kqwpgj" target="_blank">Live example</a>
 
 ---
 
 #### ✨ Features
 
-- Scoped state per component lifecycle
-
+- Component-scoped state (one store per mount)
 - createScopedStore factory for reusable stores
-
-- useScopedStore React hook
-
-- useScopedSelector for fine-grained rendering
-
-- Works with React 17+
-
-- No global store, no Context boilerplate
-
-- Lightweight and framework-agnostic core
+- useScopedStore hook for lifecycle management
+- useScopedSelector for fine-grained re-renders
+- No global store
+- No Context boilerplate
+- React 17+ compatible
+- Tiny, framework-agnostic core
 
 ---
 
@@ -43,26 +45,32 @@ import { createScopedStore } from "react-scoped-store-z"
 
 export const createCounterStore = createScopedStore(() => ({
   count: 0,
-  label: "Counter"
+  label: "Counter",
 }))
 ```
 
 ##### 2️⃣ Use store in a component
 ```ts
-import React from "react"
 import { useScopedStore, useScopedSelector } from "react-scoped-store-z"
 import { createCounterStore } from "./stores/counter.store"
 
 export function Counter() {
   const { store, setState } = useScopedStore(createCounterStore)
 
-  // selector only subscribes to `count`
+  // Subscribe only to `count`
   const count = useScopedSelector(store, s => s.count)
 
   return (
     <div>
-      <p>{store.getState().label}: {count}</p>
-      <button onClick={() => setState(s => ({ count: s.count + 1 }))}>
+      <p>
+        {store.getState().label}: {count}
+      </p>
+
+      <button
+        onClick={() =>
+          setState(s => ({ count: s.count + 1 }))
+        }
+      >
         Increment
       </button>
     </div>
@@ -76,9 +84,13 @@ export function Counter() {
 ```ts
 function App() {
   const [open, setOpen] = React.useState(false)
+
   return (
     <>
-      <button onClick={() => setOpen(o => !o)}>Toggle Counter</button>
+      <button onClick={() => setOpen(o => !o)}>
+        Toggle Counter
+      </button>
+
       {open && <Counter />}
     </>
   )
@@ -87,22 +99,36 @@ function App() {
 
 
 - Mount → store created
-
 - Unmount → store destroyed automatically
-
 - Scoped to component instance
 
 ---
 
-#### 🧠 Why use react-scoped-store-z?
+#### 🧠 Mental Model
+```bash
+Component instance
+ └─ ScopedStore
+     ├─ state
+     ├─ listeners
+     └─ lifecycle = component lifecycle
+```
+- Think of react-scoped-store-z as a local ViewModel for your component.
 
-- No global store pollution
+---
 
-- No unnecessary re-renders like Context alone
+#### ⚠️ Limitations
 
-- Perfect for modals, wizards, step forms
+react-scoped-store-z is intentionally minimal and opinionated.  
+The following limitations are design choices, not missing features.  
 
-- Works seamlessly with React 17+ and 18
+###### ❌ No shared state  
+
+Each store instance is scoped to a single component lifecycle.
+- Stores are created on mount
+- Destroyed automatically on unmount
+- No global or cross-instance sharing
+
+If you need shared or global state, consider tools like Zustand or Redux.
 
 ---
 

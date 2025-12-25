@@ -1,6 +1,6 @@
 {
   "name": "react-scoped-store-z",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Lightweight scoped state store for React using useSyncExternalStore",
   "license": "MIT",
   "author": "Delpi.Kye",
